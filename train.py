@@ -76,7 +76,7 @@ def train(args):
 
         for idx, minibatch_ in enumerate(train_loader):
 
-            tcm = minibatch_
+            _, cm = minibatch_
 
             img = torch.stack(cm).unsqueeze(1)
 

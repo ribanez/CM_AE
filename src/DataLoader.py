@@ -9,15 +9,18 @@ class Dataset_CM(torch.utils.data.Dataset):
         super(Dataset_CM, self).__init__()
 
         self.h5pyfile = h5py.File(filename, 'r')
-        self.num_proteins, self.max_sequence_len = self.h5pyfile['contact_map'].shape
+        self.num_seq = self.h5pyfile['sequence'].shape
 
     def __getitem__(self, index):
+
+        seq = torch.Tensor(self.h5pyfile['sequence'][index])
+
         cm = torch.Tensor(self.h5pyfile['contact_map'][index, :, :])
 
-        return cm
+        return seq, cm
 
     def __len__(self):
-        return self.num_proteins
+        return self.num_seq
 
     def merge_samples_to_minibatch(samples):
         samples_list = []
